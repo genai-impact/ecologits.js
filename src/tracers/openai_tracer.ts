@@ -1,6 +1,6 @@
 import OpenAi from "openai";
 import type { APIPromise, RequestOptions } from "openai/core";
-import type { Stream } from "openai/streaming";
+import { Stream } from "openai/streaming";
 import type {
   ChatCompletion,
   ChatCompletionCreateParamsStreaming,
@@ -14,6 +14,38 @@ import ecologitsData from "../tracers/utils";
 
 const PROVIDER = "openai";
 
+function mapStream(
+  timerStart: Date,
+  model: string,
+  stream: Stream<ChatCompletionChunk>
+) {
+  let tokens = 0;
+
+  async function* iterator() {
+    for await (const item of stream) {
+      tokens += 1;
+      const requestLatency = new Date().getTime() - timerStart.getTime();
+      const impacts = ecologitsData.computeLlmImpacts(
+        PROVIDER,
+        model,
+        tokens,
+        requestLatency
+      );
+      yield { ...item, impact: impacts };
+    }
+  }
+  return new Stream(iterator, stream.controller);
+}
+
+async function createStream(
+  timerStart: Date,
+  model: string,
+  stream: APIPromise<Stream<ChatCompletionChunk>>
+) {
+  const res = await stream;
+  return mapStream(timerStart, model, res);
+}
+
 class CompletionsWraper extends OpenAi.Chat.Completions {
   create(
     body: ChatCompletionCreateParamsNonStreaming,
@@ -22,7 +54,7 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
   create(
     body: ChatCompletionCreateParamsStreaming,
     options?: RequestOptions
-  ): APIPromise<Stream<ChatCompletionChunk>>;
+  ): APIPromise<Stream<ChatCompletionChunk & { impact: Impact }>>;
   create(
     body: ChatCompletionCreateParamsBase,
     options?: RequestOptions
@@ -34,16 +66,19 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
     options?: RequestOptions
   ):
     | APIPromise<ChatCompletion & { impact: Impact }>
-    | APIPromise<Stream<ChatCompletionChunk>> {
+    | APIPromise<Stream<ChatCompletionChunk & { impact: Impact }>> {
     const timerStart = new Date();
     const streamed = body.stream ?? false;
 
     if (streamed) {
-      return this._client.post("/chat/completions", {
+      const stream = this._client.post("/chat/completions", {
         body,
         ...options,
         stream: streamed,
       }) as APIPromise<Stream<ChatCompletionChunk>>;
+      return createStream(timerStart, body.model, stream) as APIPromise<
+        Stream<ChatCompletionChunk & { impact: Impact }>
+      >;
     }
 
     const res = this._client.post("/chat/completions", {
