@@ -1,0 +1,23 @@
+{
+  "name": "ecologits.js",
+  "version": "1.0.0",
+  "description": "Npm dependency for Ecologits project",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node es/index.js",
+    "dev": "yarn build && node es/index.js"
+  },
+  "author": "Noé GRANGE",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "openai": "^4.48.1"
+  }
+}
