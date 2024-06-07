@@ -54,7 +54,7 @@ main();
 
 ## Current challenges
 
-- [ ] 🔥 Patching the providers responses with the `impact` object like in the python library
+- [ ] 🔥 Patching the providers responses with the `impacts` object like in the python library
 - [ ] publishing the package to npm
 - [ ] port tests from python to js
 - [ ] reduce work to keep the library up-to-date with the python library (csv files, etc)
@@ -63,6 +63,3 @@ main();
 
 Feel free to contribute to this project by opening an issue or a pull request.
 
-```
-
-```
