@@ -1,23 +1,45 @@
 {
   "name": "ecologits.js",
-  "version": "1.0.0",
-  "description": "Npm dependency for Ecologits project",
+  "version": "0.0.1",
+  "description": "TypeScript port of genai-impact/ecologits python library",
   "main": "es/index.js",
   "types": "es/index.d.ts",
   "source": "src/index.ts",
+  "keywords": [
+    "ecologits",
+    "openai",
+    "mistral",
+    "anthropic",
+    "cohere",
+    "huggingface",
+    "climate",
+    "co2",
+    "measure",
+    "carbon",
+    "footprint",
+    "llm"
+  ],
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node es/index.js",
-    "dev": "yarn build && node es/index.js"
+    "dev": "tsc-watch --noClear --onSuccess 'node es/test.js'"
   },
-  "author": "Noé GRANGE",
-  "license": "ISC",
+  "author": {
+    "name": "Noé GRANGE",
+    "email": "noe.grange@epitech.eu"
+  },
+  "homepage": "ecologits.ai",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/valraiso-innov/ecologits.js.git"
+  },
+  "license": "MPL-2.0",
   "devDependencies": {
     "@types/node": "^20.14.2",
+    "tsc-watch": "^5.0.3",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "fs": "^0.0.1-security",
-    "openai": "^4.48.1"
+    "openai": "^4.49.0"
   }
 }

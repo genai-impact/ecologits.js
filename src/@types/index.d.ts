@@ -1,11 +1,11 @@
-export type ImpactPart = {
+type ImpactPart = {
   type: "energy" | "GWP" | "ADPe" | "PE";
   name: string;
   unit: string;
   value: number;
 };
 
-export type Impact = {
+type Impacts = {
   energy: ImpactPart;
   gwp: ImpactPart;
   adpe: ImpactPart;

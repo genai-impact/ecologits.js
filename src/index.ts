@@ -1,5 +1,5 @@
-import type { Impact } from "./impacts/types";
 import { OpenAiWrapper } from "./tracers/openai_tracer";
 
-export type { Impact };
+type _Impacts = Impacts;
+export type { _Impacts as Impacts };
 export { OpenAiWrapper as OpenAI };

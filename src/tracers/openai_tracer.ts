@@ -9,7 +9,6 @@ import type {
   ChatCompletionCreateParamsBase,
   ChatCompletionCreateParams,
 } from "openai/resources/chat/completions";
-import type { Impact } from "../impacts/types";
 import ecologitsData from "../tracers/utils";
 
 const PROVIDER = "openai";
@@ -31,7 +30,7 @@ function mapStream(
         tokens,
         requestLatency
       );
-      yield { ...item, impact: impacts };
+      yield { ...item, impacts };
     }
   }
   return new Stream(iterator, stream.controller);
@@ -50,23 +49,23 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
   create(
     body: ChatCompletionCreateParamsNonStreaming,
     options?: RequestOptions
-  ): APIPromise<ChatCompletion & { impact: Impact }>;
+  ): APIPromise<ChatCompletion & { impacts: Impacts }>;
   create(
     body: ChatCompletionCreateParamsStreaming,
     options?: RequestOptions
-  ): APIPromise<Stream<ChatCompletionChunk & { impact: Impact }>>;
+  ): APIPromise<Stream<ChatCompletionChunk & { impacts: Impacts }>>;
   create(
     body: ChatCompletionCreateParamsBase,
     options?: RequestOptions
   ): APIPromise<
-    Stream<ChatCompletionChunk> | (ChatCompletion & { impact: Impact })
+    Stream<ChatCompletionChunk> | (ChatCompletion & { impacts: Impacts })
   >;
   create(
     body: ChatCompletionCreateParams,
     options?: RequestOptions
   ):
-    | APIPromise<ChatCompletion & { impact: Impact }>
-    | APIPromise<Stream<ChatCompletionChunk & { impact: Impact }>> {
+    | APIPromise<ChatCompletion & { impacts: Impacts }>
+    | APIPromise<Stream<ChatCompletionChunk & { impacts: Impacts }>> {
     const timerStart = new Date();
     const streamed = body.stream ?? false;
 
@@ -77,7 +76,7 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
         stream: streamed,
       }) as APIPromise<Stream<ChatCompletionChunk>>;
       return createStream(timerStart, body.model, stream) as APIPromise<
-        Stream<ChatCompletionChunk & { impact: Impact }>
+        Stream<ChatCompletionChunk & { impacts: Impacts }>
       >;
     }
 
@@ -95,8 +94,8 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
         tokens,
         requestLatency
       );
-      return { ...resp, impact: impacts };
-    }) as APIPromise<ChatCompletion & { impact: Impact }>;
+      return { ...resp, impacts };
+    }) as APIPromise<ChatCompletion & { impacts: Impacts }>;
   }
 }
 
