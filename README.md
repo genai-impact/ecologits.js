@@ -22,8 +22,10 @@ yarn add ecologits.js
 
 ⚠️ This is the preliminary usage, which will hopefully change in the near future to be more similar to the python library.
 
+**Warning**: as usual, you'll need to provide your credentials to your API provider in the environment variables as instructed by them, or pass them directly to the client as you would normally.
+
 ```ts
-import { OpenAI, type Impact } from "ecologits";
+import { OpenAI, type Impact } from "ecologits.js";
 import type OpenAITypes from "openai"; // TODO : remove dependency
 
 const client = new OpenAI();
@@ -34,6 +36,10 @@ const main = async () => {
   })) as OpenAITypes.Chat.Completions.ChatCompletion & { impacts: Impacts };
 
   // Get estimated environmental impacts of the inference
+  console.log(
+    `Response  (${response.choices[0].message.content.length} tokens):
+   """${response.choices[0].message.content}"""\n`
+  );
   console.log(
     `Energy consumption: ${response.impacts.energy.value} ${response.impacts.energy.unit}`
   );

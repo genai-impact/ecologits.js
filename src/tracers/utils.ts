@@ -14,19 +14,40 @@ type ModelData = {
 class EcoLogitsData {
   data: ModelData[] = [];
 
-  constructor() {
-    const res = fs.readFileSync("./src/data/models.csv");
-    const lines = res.toString().split("\n");
-    this.data = lines.slice(1, lines.length).map((line) => {
-      const infos = line.split(",");
-      return {
-        provider: infos[0],
-        name: infos[1],
-        totalParameters: infos[2].split(";").map((x) => parseFloat(x)),
-        activeParameters: infos[3].split(";").map((x) => parseFloat(x)),
-        warnings: infos[4],
-        sources: infos[5],
-      } as ModelData;
+  constructor(data: ModelData[]) {
+    if (data.length === undefined) {
+      throw new Error("Cannot be called directly. Use build() instead.");
+    }
+    this.data = data;
+  }
+
+  static async build() {
+    const url =
+      "https://raw.githubusercontent.com/genai-impact/ecologits/main/ecologits/data/models.csv";
+    return fetch(url).then((res) => {
+      return res.text().then(
+        (text) =>
+          new EcoLogitsData(
+            text
+              .split("\n")
+              .slice(1, text.length)
+              .map((line) => {
+                const infos = line.split(",");
+                return {
+                  provider: infos[0],
+                  name: infos[1],
+                  totalParameters: infos[2]
+                    .split(";")
+                    .map((x) => parseFloat(x)),
+                  activeParameters: infos[3]
+                    .split(";")
+                    .map((x) => parseFloat(x)),
+                  warnings: infos[4],
+                  sources: infos[5],
+                } as ModelData;
+              })
+          )
+      );
     });
   }
 
@@ -61,4 +82,4 @@ class EcoLogitsData {
   }
 }
 
-export default new EcoLogitsData();
+export default EcoLogitsData;

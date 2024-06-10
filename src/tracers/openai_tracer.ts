@@ -9,16 +9,17 @@ import type {
   ChatCompletionCreateParamsBase,
   ChatCompletionCreateParams,
 } from "openai/resources/chat/completions";
-import ecologitsData from "../tracers/utils";
+import EcoLogitsData from "../tracers/utils";
 
 const PROVIDER = "openai";
 
-function mapStream(
+async function mapStream(
   timerStart: Date,
   model: string,
   stream: Stream<ChatCompletionChunk>
 ) {
   let tokens = 0;
+  const ecologitsData = await EcoLogitsData.build();
 
   async function* iterator() {
     for await (const item of stream) {
@@ -85,9 +86,10 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
       ...options,
       stream: streamed,
     }) as APIPromise<ChatCompletion>;
-    return res.then((resp) => {
+    return res.then(async (resp) => {
       const requestLatency = new Date().getTime() - timerStart.getTime();
       const tokens = resp.usage?.completion_tokens || 0;
+      const ecologitsData = await EcoLogitsData.build();
       const impacts = ecologitsData.computeLlmImpacts(
         PROVIDER,
         body.model,
