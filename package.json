@@ -1,6 +1,6 @@
 {
-  "name": "ecologits.js",
-  "version": "0.0.1",
+  "name": "@genai-impact/ecologits.js",
+  "version": "0.1.0",
   "description": "TypeScript port of genai-impact/ecologits python library",
   "main": "es/index.js",
   "types": "es/index.d.ts",
@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "dev": "tsc-watch --noClear --onSuccess 'node es/test.js'"
+    "prepublishOnly": "yarn build",
+    "watch": "tsc-watch --noClear"
   },
   "author": {
     "name": "Noé GRANGE",
