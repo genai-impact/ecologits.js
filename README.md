@@ -9,13 +9,13 @@ This repository is a tentative of porting the [genai-impact/ecologits python lib
 ### Using npm
 
 ```bash
-npm install ecologits.js
+npm install @genai-impact/ecologits.js
 ```
 
 ### Using yarn
 
 ```bash
-yarn add ecologits.js
+yarn add @genai-impact/ecologits.js
 ```
 
 ## Usage
