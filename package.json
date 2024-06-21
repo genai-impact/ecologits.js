@@ -1,6 +1,6 @@
 {
   "name": "@genai-impact/ecologits.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "TypeScript port of genai-impact/ecologits python library",
   "main": "es/index.js",
   "types": "es/index.d.ts",
@@ -24,6 +24,10 @@
     "prepublishOnly": "yarn build",
     "watch": "tsc-watch --noClear"
   },
+  "packageManager": "yarn@1.22.18",
+  "files": [
+    "es"
+  ],
   "author": {
     "name": "Noé GRANGE",
     "email": "noe.grange@epitech.eu"
