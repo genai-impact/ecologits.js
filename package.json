@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "fs": "^0.0.1-security",
-    "openai": "^4.49.0"
+    "openai": "^4.49.0",
+    "require-in-the-middle": "^7.3.0"
   }
 }

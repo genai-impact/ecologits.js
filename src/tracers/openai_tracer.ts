@@ -1,3 +1,4 @@
+import { Hook, OnRequireFn } from "require-in-the-middle";
 import OpenAi from "openai";
 import type { APIPromise, RequestOptions } from "openai/core";
 import { Stream } from "openai/streaming";
@@ -9,7 +10,9 @@ import type {
   ChatCompletionCreateParamsBase,
   ChatCompletionCreateParams,
 } from "openai/resources/chat/completions";
+
 import EcoLogitsData from "../tracers/utils";
+import { BaseInstrumentor } from "./baseInstrumentor";
 
 const PROVIDER = "openai";
 
@@ -105,6 +108,30 @@ class ChatWraper extends OpenAi.Chat {
   completions: OpenAi.Chat.Completions = new CompletionsWraper(this._client);
 }
 
-export class OpenAiWrapper extends OpenAi {
+class OpenAiWrapper extends OpenAi {
   chat: OpenAi.Chat = new ChatWraper(this);
+  toto: string = "toto";
 }
+/**
+ * Instrument openai chat completions to add impacts to the response
+ *
+ */
+export class OpenAIInstrumentor extends BaseInstrumentor {
+  constructor() {
+    super("openai", chatCompletionsCreateHook);
+  }
+}
+
+const chatCompletionsCreateHook: OnRequireFn = (
+  exported: any,
+  name: string,
+  baseDir
+) => {
+  if (name === "openai") {
+    console.debug(`Hooking ${name}`);
+    exported = OpenAiWrapper;
+  } else {
+    console.debug(`Skipping ${name}`);
+  }
+  return exported;
+};
