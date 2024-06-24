@@ -25,7 +25,11 @@ yarn add @genai-impact/ecologits.js
 **Warning**: as usual, you'll need to provide your credentials to your API provider in the environment variables as instructed by them, or pass them directly to the client as you would normally.
 
 ```ts
-import { OpenAI, type Impacts } from "ecologits.js";
+import { Ecologits, type Impacts } from "ecologits.js";
+Ecologits.init(); // Call ecologits **before** any other relevant AI package import
+
+import OpenAI from "openai";
+
 import type OpenAITypes from "openai"; // TODO : remove dependency
 
 const client = new OpenAI();
@@ -68,4 +72,3 @@ main();
 ## Contributing
 
 Feel free to contribute to this project by opening an issue or a pull request.
-
