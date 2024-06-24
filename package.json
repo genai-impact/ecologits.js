@@ -5,6 +5,13 @@
   "main": "es/index.js",
   "types": "es/index.d.ts",
   "source": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "yarn build",
+    "watch": "tsc-watch --noClear",
+    "test": "node es/test.js",
+    "clean": "rm -rf es"
+  },
   "keywords": [
     "ecologits",
     "openai",
@@ -19,11 +26,6 @@
     "footprint",
     "llm"
   ],
-  "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "yarn build",
-    "watch": "tsc-watch --noClear"
-  },
   "packageManager": "yarn@1.22.18",
   "files": [
     "es"
@@ -44,7 +46,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "node-fetch": "^3.3.2",
+    "node-fetch": "<3.0.0",
     "openai": "^4.49.0"
   },
   "engines": {
