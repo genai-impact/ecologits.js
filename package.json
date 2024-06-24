@@ -1,6 +1,6 @@
 {
   "name": "@genai-impact/ecologits.js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "TypeScript port of genai-impact/ecologits python library",
   "main": "es/index.js",
   "types": "es/index.d.ts",
@@ -44,7 +44,10 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "fs": "^0.0.1-security",
+    "node-fetch": "^3.3.2",
     "openai": "^4.49.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
