@@ -1,4 +1,4 @@
-import fs from "fs";
+import fetch from "node-fetch";
 import computeLlmImpacts from "../impacts/dag";
 import { DEFAULT_IMPACT } from "../impacts/default";
 
