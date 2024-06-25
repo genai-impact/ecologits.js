@@ -25,25 +25,26 @@ yarn add @genai-impact/ecologits.js
 **Warning**: as usual, you'll need to provide your credentials to your API provider in the environment variables as instructed by them, or pass them directly to the client as you would normally.
 
 ```ts
-import { Ecologits, type Impacts } from "ecologits.js";
-Ecologits.init(); // Call ecologits **before** any other relevant AI package import
-
+import { Ecologits, type Impacts } from "@genai-impact/ecologits.js";
 import OpenAI from "openai";
 
-import type OpenAITypes from "openai"; // TODO : remove dependency
+Ecologits.init(); // Call ecologits **before** any other relevant AI package import
 
 const client = new OpenAI();
 const main = async () => {
   const response = (await client.chat.completions.create({
     messages: [{ role: "user", content: "Tell me a funny joke!" }],
     model: "gpt-3.5-turbo",
-  })) as OpenAITypes.Chat.Completions.ChatCompletion & { impacts: Impacts };
+  })) as OpenAI.Chat.Completions.ChatCompletion & { impacts: Impacts };
+
+  console.log(
+    `Joke: ${response.choices[0].message.content}`
+  );
+  console.log(
+    `Token generated: ${response.usage.completion_tokens} tokens`
+  );
 
   // Get estimated environmental impacts of the inference
-  console.log(
-    `Response  (${response.choices[0].message.content.length} tokens):
-   """${response.choices[0].message.content}"""\n`
-  );
   console.log(
     `Energy consumption: ${response.impacts.energy.value} ${response.impacts.energy.unit}`
   );
