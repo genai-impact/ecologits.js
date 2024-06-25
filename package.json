@@ -1,6 +1,6 @@
 {
   "name": "@genai-impact/ecologits.js",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "TypeScript port of genai-impact/ecologits python library",
   "main": "es/index.js",
   "types": "es/index.d.ts",
@@ -40,15 +40,23 @@
     "url": "git://github.com/valraiso-innov/ecologits.js.git"
   },
   "license": "MPL-2.0",
+  "dependencies": {
+    "node-fetch": "<3.0.0",
+    "require-in-the-middle": "^7.3.0"
+  },
   "devDependencies": {
     "@types/node": "^20.14.2",
     "tsc-watch": "^5.0.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "openai": "^4.49.0"
   },
-  "dependencies": {
-    "node-fetch": "<3.0.0",
-    "openai": "^4.49.0",
-    "require-in-the-middle": "^7.3.0"
+  "peerDependencies": {
+    "openai": "^4.49.0"
+  },
+  "peerDependenciesMeta": {
+    "openai": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=14.0.0"
