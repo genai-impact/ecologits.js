@@ -1,4 +1,4 @@
-import { Hook, OnRequireFn } from "require-in-the-middle";
+import { OnRequireFn } from "require-in-the-middle";
 import OpenAi from "openai";
 import type { APIPromise, RequestOptions } from "openai/core";
 import { Stream } from "openai/streaming";
@@ -124,8 +124,7 @@ export class OpenAIInstrumentor extends BaseInstrumentor {
 
 const chatCompletionsCreateHook: OnRequireFn = (
   exported: any,
-  name: string,
-  baseDir
+  name: string
 ) => {
   if (name === "openai") {
     console.debug(`Hooking ${name}`);

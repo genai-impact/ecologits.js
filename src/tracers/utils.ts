@@ -11,6 +11,8 @@ type ModelData = {
   sources: string;
 };
 
+let cachedData: EcoLogitsData | undefined;
+
 class EcoLogitsData {
   data: ModelData[] = [];
 
@@ -22,9 +24,10 @@ class EcoLogitsData {
   }
 
   static async build() {
+    if (cachedData) return cachedData;
     const url =
       "https://raw.githubusercontent.com/genai-impact/ecologits/main/ecologits/data/models.csv";
-    return fetch(url).then((res) => {
+    const data = await fetch(url).then((res) => {
       return res.text().then(
         (text) =>
           new EcoLogitsData(
@@ -49,6 +52,8 @@ class EcoLogitsData {
           )
       );
     });
+    cachedData = data;
+    return data;
   }
 
   findModel(provider: string, name: string): ModelData | undefined {
