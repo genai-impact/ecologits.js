@@ -20,8 +20,6 @@ yarn add @genai-impact/ecologits.js
 
 ## Usage
 
-⚠️ This is the preliminary usage, which will hopefully change in the near future to be more similar to the python library.
-
 **Warning**: as usual, you'll need to provide your credentials to your API provider in the environment variables as instructed by them, or pass them directly to the client as you would normally.
 
 ```ts
@@ -58,7 +56,7 @@ main();
 ## Porting Status
 
 - [x] `openAI` tracer
-- [ ] `mistral` tracer
+- [ ] `mistral` tracer (branch `feat/mistral_tracer`)
 - [ ] `anthropic` tracer
 - [ ] `huggingface` tracer
 - [ ] `cohere` tracer
