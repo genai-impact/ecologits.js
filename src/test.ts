@@ -1,9 +1,9 @@
 import type { Impacts } from "./index";
 import { Ecologits } from "./index";
-Ecologits.init();
 import OpenAI from "openai";
-
 import type OpenAITypes from "openai"; // TODO : remove dependency
+
+Ecologits.init();
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

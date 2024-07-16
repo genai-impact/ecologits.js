@@ -110,7 +110,6 @@ class ChatWraper extends OpenAi.Chat {
 
 class OpenAiWrapper extends OpenAi {
   chat: OpenAi.Chat = new ChatWraper(this);
-  toto: string = "toto";
 }
 /**
  * Instrument openai chat completions to add impacts to the response

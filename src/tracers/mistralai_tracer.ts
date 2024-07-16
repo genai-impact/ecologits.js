@@ -36,11 +36,27 @@ class MistralAiWrapper extends MistralClient {
     });
   };
 
-  // chatStream: MistralClient["chatStream"] = async (request, options?) => {
+  // chatStream: MistralClient["chatStream"] = async function* (request, options?) {
   //   const timerStart = new Date().getTime();
-  //   for await (const item of super.chatStream(request, options)) {
-  // TODO: implement token counting
-  //   };
+  //   const ecologitsData = await EcoLogitsData.build();
+  //   // let tokens = 0;
+  //   const stream = super.chatStream(request, options);
+
+  //   async function* iterator() {
+  //     for await (const item of stream) {
+  //       // tokens += 1;
+  //       const tokens = item.usage?.completion_tokens || 0;
+  //       const requestLatency = new Date().getTime() - timerStart;
+  //       const impacts = ecologitsData.computeLlmImpacts(
+  //         PROVIDER,
+  //         request.model,
+  //         tokens,
+  //         requestLatency
+  //       );
+  //       yield ({ ...item, impacts });
+  //     };
+  //   }
+  //   return iterator();
   // };
 }
 

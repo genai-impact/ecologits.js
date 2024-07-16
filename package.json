@@ -53,7 +53,7 @@
   },
   "peerDependencies": {
     "@mistralai/mistralai": "^0.5.0",
-    "openai": "^4.49.0"
+    "openai": "^4.1.0"
   },
   "peerDependenciesMeta": {
     "@mistralai/mistralai": {
