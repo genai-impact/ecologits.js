@@ -1,4 +1,5 @@
-import * as Llm from "./llm";
+import { ImpactMetric, Impacts } from "../types.js";
+import * as Llm from "./llm.js";
 
 const MODEL_QUANTIZATION_BITS = 4;
 
@@ -85,14 +86,30 @@ const DEFAULT_CALCULATED_PROPS: CalculatedProps = {
   requestEmbodiedAdpe: 0,
   requestEmbodiedPe: 0,
 };
+const orderedFuncs = [
+  "gpuEnergy",
+  "generationLatency",
+  "modelRequiredMemory",
+  "gpuRequiredCount",
+  "serverEnergy",
+  "requestEnergy",
+  "requestUsageGwp",
+  "requestUsageAdpe",
+  "requestUsagePe",
+  "serverGpuEmbodiedGwp",
+  "serverGpuEmbodiedAdpe",
+  "serverGpuEmbodiedPe",
+  "requestEmbodiedGwp",
+  "requestEmbodiedAdpe",
+  "requestEmbodiedPe",
+];
 
 function dagExecute(props: ComputeLLmImpactsProps) {
   const allProps: ComputeLLmImpactsProps & CalculatedProps = {
     ...DEFAULT_CALCULATED_PROPS, // add default values to const that are going to be calculated
     ...props,
   };
-  const funcs = Object.keys(Llm); // get all calcul functions
-  return funcs.reduce((acc, fn) => {
+  return orderedFuncs.reduce((acc, fn) => {
     const res = Llm[fn as keyof typeof Llm](allProps);
     allProps[fn as keyof typeof DEFAULT_CALCULATED_PROPS] = res;
     return { ...acc, [fn]: res };
@@ -123,7 +140,7 @@ export default function computeLlmImpacts(
   ifElectricityMixGwp: number = IF_ELECTRICITY_MIX_GWP,
   ifElectricityMixAdpe: number = IF_ELECTRICITY_MIX_ADPE,
   ifElectricityMixPe: number = IF_ELECTRICITY_MIX_PE
-) {
+): Impacts {
   const results = dagExecute({
     modelActiveParameterCount,
     modelTotalParameterCount,
@@ -149,43 +166,43 @@ export default function computeLlmImpacts(
     ifElectricityMixAdpe,
     ifElectricityMixPe,
   });
-  const energy = {
+  const energy: ImpactMetric = {
     type: "energy",
     name: "Energy",
     unit: "kWh",
     value: results["requestEnergy"],
   };
-  const gwpUsage = {
+  const gwpUsage: ImpactMetric = {
     type: "GWP",
     name: "Global Warming Potential",
     unit: "kgCO2eq",
     value: results["requestUsageGwp"],
   };
-  const adpeUsage = {
+  const adpeUsage: ImpactMetric = {
     type: "ADPe",
     name: "Abiotic Depletion Potential (elements)",
     unit: "kgSbeq",
     value: results["requestUsageAdpe"],
   };
-  const peUsage = {
+  const peUsage: ImpactMetric = {
     type: "PE",
     name: "Primary Energy",
     unit: "MJ",
     value: results["requestUsagePe"],
   };
-  const gwpEmbodied = {
+  const gwpEmbodied: ImpactMetric = {
     type: "GWP",
     name: "Global Warming Potential",
     unit: "kgCO2eq",
     value: results["requestEmbodiedGwp"],
   };
-  const adpeEmbodied = {
+  const adpeEmbodied: ImpactMetric = {
     type: "ADPe",
     name: "Abiotic Depletion Potential (elements)",
     unit: "kgSbeq",
     value: results["requestEmbodiedAdpe"],
   };
-  const peEmbodied = {
+  const peEmbodied: ImpactMetric = {
     type: "PE",
     name: "Primary Energy",
     unit: "MJ",

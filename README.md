@@ -6,68 +6,68 @@ This repository is a tentative of porting the [genai-impact/ecologits python lib
 
 ## Installation
 
-### Using npm
+Installation depends on the model providers that you use in your code.
+
+### Open AI
 
 ```bash
-npm install @genai-impact/ecologits.js
+npm install @genai-impact/ecologits-openai
 ```
 
-### Using yarn
+### Mistral AI
 
 ```bash
-yarn add @genai-impact/ecologits.js
+npm install @genai-impact/ecologits-mistral
 ```
 
 ## Usage
 
-**Warning**: as usual, you'll need to provide your credentials to your API provider in the environment variables as instructed by them, or pass them directly to the client as you would normally.
+The usage will depend on the model provider used in your code.
+But the principle is simple :
+
+- import the provider wrapper from `@genai-impact/ecologits-<provider>`
+- use it (e.g. `MistralClient` / `OpenAI`) as you would usually.
+- The wrapper adds an `impacts` attribute to the response containing EcoLogits metrics.
+
+> [!WARNING] As usual, you'll need to provide your credentials to your API provider in the environment variables as instructed by them, or pass them directly to the client as you would normally.
 
 ```ts
-import { Ecologits, type Impacts } from "@genai-impact/ecologits.js";
-import OpenAI from "openai";
+import MistralClient from "@genai-impact/ecologits-mistral";
+import { ChatCompletionResponse } from "@mistralai/mistralai";
+import { Impacts } from "core";
 
-Ecologits.init(); // Call ecologits **before** any other relevant AI package import
+const apiKey = process.env.MISTRAL_API_KEY;
 
-const client = new OpenAI();
+const client = new MistralClient(apiKey);
+
 const main = async () => {
-  const response = (await client.chat.completions.create({
-    messages: [{ role: "user", content: "Tell me a funny joke!" }],
-    model: "gpt-3.5-turbo",
-  })) as OpenAI.Chat.Completions.ChatCompletion & { impacts: Impacts };
-
-  console.log(
-    `Joke: ${response.choices[0].message.content}`
-  );
-  console.log(
-    `Token generated: ${response.usage.completion_tokens} tokens`
-  );
-
-  // Get estimated environmental impacts of the inference
-  console.log(
-    `Energy consumption: ${response.impacts.energy.value} ${response.impacts.energy.unit}`
-  );
-  console.log(
-    `GHG emissions: ${response.impacts.gwp.value} ${response.impacts.gwp.unit}`
-  );
+  try {
+    const response = (await client.chat({
+      model: "mistral-tiny",
+      messages: [{ role: "user", content: "What is the best French cheese?" }],
+    })) as ChatCompletionResponse & { impacts: Impacts };
+    // Get estimated environmental impacts of the inference
+    console.log(
+      `Energy consumption: ${response.impacts.energy.value} ${response.impacts.energy.unit}`
+    );
+    console.log(
+      `GHG emissions: ${response.impacts.gwp.value} ${response.impacts.gwp.unit}`
+    );
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 };
 main();
 ```
 
-## Porting Status
-
-- [x] `openAI` tracer
-- [ ] `mistral` tracer (branch `feat/mistral_tracer`)
-- [ ] `anthropic` tracer
-- [ ] `huggingface` tracer
-- [ ] `cohere` tracer
-
-## Current challenges
-
-- [ ] 🔥 Patching the providers responses with the `impacts` object like in the python library (with seamless types exposition)
-- [ ] publishing the package to npm
-- [ ] port tests from python to js
-- [ ] reduce work to keep the library up-to-date with the python library (csv files, etc)
-
 ## Contributing
 
-Feel free to contribute to this project by opening an issue or a pull request.
+Look for open issues and feel free to contribute to this project by opening an issue or a pull request.
+We're always open to covering more model providers.
+
+### Current challenges
+
+- [ ] Setting up CI with automatic publication to npm.js of each package
+- [ ] port tests from python to js
+- [ ] reduce work to keep the library up-to-date with the python library (etc)

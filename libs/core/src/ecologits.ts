@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import computeLlmImpacts from "../impacts/dag";
-import { DEFAULT_IMPACT } from "../impacts/default";
+import computeLlmImpacts from "./impacts/dag.js";
+import { DEFAULT_IMPACT } from "./impacts/default.js";
 
 type ModelData = {
   provider: string;
@@ -19,36 +19,6 @@ class EcoLogitsData {
       throw new Error("Cannot be called directly. Use build() instead.");
     }
     this.data = data;
-  }
-
-  static async build() {
-    const url =
-      "https://raw.githubusercontent.com/genai-impact/ecologits/main/ecologits/data/models.csv";
-    return fetch(url).then((res) => {
-      return res.text().then(
-        (text) =>
-          new EcoLogitsData(
-            text
-              .split("\n")
-              .slice(1, text.length)
-              .map((line) => {
-                const infos = line.split(",");
-                return {
-                  provider: infos[0],
-                  name: infos[1],
-                  totalParameters: infos[2]
-                    .split(";")
-                    .map((x) => parseFloat(x)),
-                  activeParameters: infos[3]
-                    .split(";")
-                    .map((x) => parseFloat(x)),
-                  warnings: infos[4],
-                  sources: infos[5],
-                } as ModelData;
-              })
-          )
-      );
-    });
   }
 
   findModel(provider: string, name: string): ModelData | undefined {
@@ -81,5 +51,28 @@ class EcoLogitsData {
     );
   }
 }
+const url =
+  "https://raw.githubusercontent.com/genai-impact/ecologits/main/ecologits/data/models.csv";
+const ecoLogitsData: EcoLogitsData = await fetch(url).then((res) => {
+  return res.text().then(
+    (text) =>
+      new EcoLogitsData(
+        text
+          .split("\n")
+          .slice(1, text.length)
+          .map((line) => {
+            const infos = line.split(",");
+            return {
+              provider: infos[0],
+              name: infos[1],
+              totalParameters: infos[2].split(";").map((x) => parseFloat(x)),
+              activeParameters: infos[3].split(";").map((x) => parseFloat(x)),
+              warnings: infos[4],
+              sources: infos[5],
+            } as ModelData;
+          })
+      )
+  );
+});
 
-export default EcoLogitsData;
+export default ecoLogitsData;
