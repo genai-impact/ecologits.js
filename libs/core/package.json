@@ -1,0 +1,15 @@
+{
+  "name": "core",
+  "version": "0.0.1",
+  "description": "Core library for the Ecologits project, port of the ecologits methodology to TypeScript",
+  "type": "module",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "yarn build",
+    "watch": "tsc-watch --noClear",
+    "clean": "rm -rf es"
+  }
+}

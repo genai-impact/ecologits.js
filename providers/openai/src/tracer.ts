@@ -1,5 +1,4 @@
-import { OnRequireFn } from "require-in-the-middle";
-import OpenAi from "openai";
+import OriginOpenAI from "openai";
 import type { APIPromise, RequestOptions } from "openai/core";
 import { Stream } from "openai/streaming";
 import type {
@@ -11,8 +10,7 @@ import type {
   ChatCompletionCreateParams,
 } from "openai/resources/chat/completions";
 
-import EcoLogitsData from "../tracers/utils";
-import { BaseInstrumentor } from "./baseInstrumentor";
+import ecoLogitsData, { type Impacts } from "core";
 
 const PROVIDER = "openai";
 
@@ -22,13 +20,12 @@ async function mapStream(
   stream: Stream<ChatCompletionChunk>
 ) {
   let tokens = 0;
-  const ecologitsData = await EcoLogitsData.build();
 
   async function* iterator() {
     for await (const item of stream) {
       tokens += 1;
       const requestLatency = new Date().getTime() - timerStart.getTime();
-      const impacts = ecologitsData.computeLlmImpacts(
+      const impacts = ecoLogitsData.computeLlmImpacts(
         PROVIDER,
         model,
         tokens,
@@ -49,7 +46,7 @@ async function createStream(
   return mapStream(timerStart, model, res);
 }
 
-class CompletionsWraper extends OpenAi.Chat.Completions {
+class CompletionsWraper extends OriginOpenAI.Chat.Completions {
   create(
     body: ChatCompletionCreateParamsNonStreaming,
     options?: RequestOptions
@@ -92,8 +89,7 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
     return res.then(async (resp) => {
       const requestLatency = new Date().getTime() - timerStart.getTime();
       const tokens = resp.usage?.completion_tokens || 0;
-      const ecologitsData = await EcoLogitsData.build();
-      const impacts = ecologitsData.computeLlmImpacts(
+      const impacts = ecoLogitsData.computeLlmImpacts(
         PROVIDER,
         body.model,
         tokens,
@@ -104,32 +100,13 @@ class CompletionsWraper extends OpenAi.Chat.Completions {
   }
 }
 
-class ChatWraper extends OpenAi.Chat {
-  completions: OpenAi.Chat.Completions = new CompletionsWraper(this._client);
+class Chat extends OriginOpenAI.Chat {
+  completions: OriginOpenAI.Chat.Completions = new CompletionsWraper(
+    this._client
+  );
 }
 
-class OpenAiWrapper extends OpenAi {
-  chat: OpenAi.Chat = new ChatWraper(this);
+export default class OpenAI extends OriginOpenAI {
+  //@ts-ignore : _options is considered "private" in openai types
+  chat: OriginOpenAI.Chat = new Chat(this);
 }
-/**
- * Instrument openai chat completions to add impacts to the response
- *
- */
-export class OpenAIInstrumentor extends BaseInstrumentor {
-  constructor() {
-    super("openai", chatCompletionsCreateHook);
-  }
-}
-
-const chatCompletionsCreateHook: OnRequireFn = (
-  exported: any,
-  name: string
-) => {
-  if (name === "openai") {
-    console.debug(`Hooking ${name}`);
-    exported = OpenAiWrapper;
-  } else {
-    console.debug(`Skipping ${name}`);
-  }
-  return exported;
-};

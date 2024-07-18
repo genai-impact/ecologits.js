@@ -5,12 +5,18 @@
   "main": "es/index.js",
   "types": "es/index.d.ts",
   "source": "src/index.ts",
+  "private": true,
+  "workspaces": [
+    "libs/*",
+    "providers/*",
+    "test/*"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
     "prepublishOnly": "yarn build",
-    "watch": "tsc-watch --noClear",
-    "test": "node es/test.js",
-    "clean": "rm -rf es"
+    "test": "turbo run test",
+    "clean": "turbo run clean"
   },
   "keywords": [
     "ecologits",
@@ -26,43 +32,30 @@
     "footprint",
     "llm"
   ],
-  "packageManager": "yarn@1.22.18",
+  "packageManager": "yarn@1.22.19",
   "files": [
     "es"
   ],
   "author": {
-    "name": "Noé GRANGE",
-    "email": "noe.grange@epitech.eu"
+    "name": "GenAI-Impact",
+    "email": "yoann.couble@valraiso.fr"
   },
   "homepage": "ecologits.ai",
   "repository": {
     "type": "git",
-    "url": "git://github.com/valraiso-innov/ecologits.js.git"
+    "url": "git://github.com/genai-impact/ecologits.js.git"
   },
   "license": "MPL-2.0",
   "dependencies": {
-    "node-fetch": "<3.0.0",
-    "require-in-the-middle": "^7.3.0"
+    "node-fetch": "<3.0.0"
   },
   "devDependencies": {
-    "@mistralai/mistralai": "^0.5.0",
     "@types/node": "^20.14.2",
-    "openai": "^4.49.0",
     "tsc-watch": "^5.0.3",
+    "turbo": "^2.0.7",
     "typescript": "^5.4.5"
   },
-  "peerDependencies": {
-    "@mistralai/mistralai": "^0.5.0",
-    "openai": "^4.1.0"
-  },
-  "peerDependenciesMeta": {
-    "@mistralai/mistralai": {
-      "optional": true
-    },
-    "openai": {
-      "optional": true
-    }
-  },
+  "peerDependencies": {},
   "engines": {
     "node": ">=14.0.0"
   }
