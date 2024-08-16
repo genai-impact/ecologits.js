@@ -1,7 +1,7 @@
 {
   "name": "@genai-impact/ecologits-mistral",
-  "version": "0.0.1",
-  "description": "Ecologits.js Wrapper for the MistralAI API",
+  "version": "1.0.2",
+  "description": "Ecologits.js Calculator for the MistralAI API",
   "type": "module",
   "main": "es/index.js",
   "types": "es/index.d.ts",
@@ -42,11 +42,9 @@
   "dependencies": {
     "core": "*"
   },
-  "devDependencies": {
-    "@mistralai/mistralai": "^0.5.0"
-  },
+  "devDependencies": {},
   "peerDependencies": {
-    "@mistralai/mistralai": "^0.5.0"
+    "@mistralai/mistralai": "^1.0.2"
   },
   "engines": {
     "node": ">=18.0.0"

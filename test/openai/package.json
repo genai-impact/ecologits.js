@@ -10,7 +10,7 @@
     "build": "tsc",
     "prepublishOnly": "yarn build",
     "watch": "tsc-watch --noClear",
-    "test": "node es/index.js",
+    "test": "export $(cat .env) && node es/index.js",
     "clean": "rm -rf es"
   },
   "keywords": [

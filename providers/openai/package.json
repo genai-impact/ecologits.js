@@ -1,7 +1,7 @@
 {
   "name": "@genai-impact/ecologits-openai",
-  "version": "0.0.1",
-  "description": "Ecologits.js Wrapper for the OpenAI API",
+  "version": "4.49.0",
+  "description": "Ecologits.js Wrapper & Calculator for the OpenAI API",
   "type": "module",
   "main": "es/index.js",
   "types": "es/index.d.ts",
@@ -42,9 +42,7 @@
   "dependencies": {
     "core": "*"
   },
-  "devDependencies": {
-    "openai": "^4.49.0"
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "openai": "^4.49.0"
   },
