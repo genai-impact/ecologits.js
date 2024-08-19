@@ -10,9 +10,7 @@ import type {
   ChatCompletionCreateParams,
 } from "openai/resources/chat/completions";
 
-import ecoLogitsData, {
-  type Impacts,
-} from "../../../libs/ecologits-core/es/index.js";
+import ecoLogitsData, { type Impacts } from "./core/index.js";
 
 const PROVIDER = "openai";
 
