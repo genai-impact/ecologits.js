@@ -1,7 +1,7 @@
 import { Mistral, SDKOptions } from "@mistralai/mistralai";
 import { EventStream } from "@mistralai/mistralai/lib/event-streams.js";
 import { CompletionEvent } from "@mistralai/mistralai/models/components/completionevent.js";
-import { ecoLogitsData } from "ecologits-core";
+import ecologits from "@genai-impact/ecologits.js";
 
 const PROVIDER = "mistralai";
 
@@ -18,7 +18,7 @@ export class MistralAiWrapper extends Mistral {
       const requestLatency = new Date().getTime() - timerStart;
 
       const tokens = completion.usage?.completionTokens || 0;
-      const impacts = ecoLogitsData.computeLlmImpacts(
+      const impacts = ecologits.computeLlmImpacts(
         PROVIDER,
         request.model as string,
         tokens,
@@ -41,7 +41,7 @@ export class MistralAiWrapper extends Mistral {
           // tokens += 1;
           const tokens = item.data.usage?.completionTokens || 0;
           const requestLatency = new Date().getTime() - timerStart;
-          const impacts = ecoLogitsData.computeLlmImpacts(
+          const impacts = ecologits.computeLlmImpacts(
             PROVIDER,
             request.model as string,
             tokens,

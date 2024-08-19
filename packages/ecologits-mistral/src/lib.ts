@@ -1,7 +1,7 @@
 import { ChatCompletionResponse } from "@mistralai/mistralai/models/components/chatcompletionresponse.js";
 import { CompletionEvent } from "@mistralai/mistralai/models/components/completionevent.js";
 
-import { ecoLogitsData } from "./core/index.js";
+import ecologits from "@genai-impact/ecologits.js";
 
 const PROVIDER = "mistralai";
 
@@ -12,12 +12,7 @@ export const streamEventImpact = (
 ) => {
   const tokens = item.data.usage?.completionTokens || 0;
   const requestLatency = new Date().getTime() - startDate.getTime();
-  return ecoLogitsData.computeLlmImpacts(
-    PROVIDER,
-    model,
-    tokens,
-    requestLatency
-  );
+  return ecologits.computeLlmImpacts(PROVIDER, model, tokens, requestLatency);
 };
 
 export const completeImpact = (
@@ -27,10 +22,5 @@ export const completeImpact = (
 ) => {
   const tokens = completion.usage?.completionTokens || 0;
   const requestLatency = new Date().getTime() - startDate.getTime();
-  return ecoLogitsData.computeLlmImpacts(
-    PROVIDER,
-    model,
-    tokens,
-    requestLatency
-  );
+  return ecologits.computeLlmImpacts(PROVIDER, model, tokens, requestLatency);
 };

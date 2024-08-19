@@ -39,7 +39,9 @@
     "url": "git://github.com/genai-impact/ecologits.js.git"
   },
   "license": "MPL-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "@genai-impact/ecologits.js": "*"
+  },
   "devDependencies": {},
   "peerDependencies": {
     "@mistralai/mistralai": "^1.0.2"

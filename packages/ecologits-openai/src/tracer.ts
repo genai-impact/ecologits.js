@@ -10,7 +10,7 @@ import type {
   ChatCompletionCreateParams,
 } from "openai/resources/chat/completions";
 
-import ecoLogitsData, { type Impacts } from "./core/index.js";
+import ecologits, { type Impacts } from "@genai-impact/ecologits.js";
 
 const PROVIDER = "openai";
 
@@ -25,7 +25,7 @@ async function mapStream(
     for await (const item of stream) {
       tokens += 1;
       const requestLatency = new Date().getTime() - timerStart.getTime();
-      const impacts = ecoLogitsData.computeLlmImpacts(
+      const impacts = ecologits.computeLlmImpacts(
         PROVIDER,
         model,
         tokens,
@@ -89,7 +89,7 @@ class CompletionsWraper extends OriginOpenAI.Chat.Completions {
     return res.then(async (resp) => {
       const requestLatency = new Date().getTime() - timerStart.getTime();
       const tokens = resp.usage?.completion_tokens || 0;
-      const impacts = ecoLogitsData.computeLlmImpacts(
+      const impacts = ecologits.computeLlmImpacts(
         PROVIDER,
         body.model,
         tokens,

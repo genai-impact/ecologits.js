@@ -1,5 +1,5 @@
 {
-  "name": "@genai-impact/ecologits.js",
+  "name": "ecologits.js",
   "version": "1.0.0",
   "description": "TypeScript port of genai-impact/ecologits python library",
   "main": "es/index.js",
@@ -7,8 +7,7 @@
   "source": "src/index.ts",
   "private": true,
   "workspaces": [
-    "libs/*",
-    "providers/*",
+    "packages/*",
     "test/*"
   ],
   "scripts": {
@@ -18,24 +17,7 @@
     "test": "turbo run test",
     "clean": "turbo run clean"
   },
-  "keywords": [
-    "ecologits",
-    "openai",
-    "mistral",
-    "anthropic",
-    "cohere",
-    "huggingface",
-    "climate",
-    "co2",
-    "measure",
-    "carbon",
-    "footprint",
-    "llm"
-  ],
   "packageManager": "yarn@1.22.19",
-  "files": [
-    "es"
-  ],
   "author": {
     "name": "GenAI-Impact",
     "email": "yoann.couble@valraiso.fr"

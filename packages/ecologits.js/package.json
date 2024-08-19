@@ -1,6 +1,6 @@
 {
-  "name": "ecologits-core",
-  "version": "0.0.1",
+  "name": "@genai-impact/ecologits.js",
+  "version": "1.0.0",
   "description": "Core library for the Ecologits project, port of the ecologits methodology to TypeScript",
   "type": "module",
   "main": "es/index.js",
