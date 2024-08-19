@@ -1,6 +1,6 @@
 {
   "name": "@genai-impact/ecologits-mistral",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Ecologits.js Calculator for the MistralAI API",
   "type": "module",
   "main": "es/index.js",
