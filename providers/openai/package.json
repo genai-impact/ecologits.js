@@ -1,6 +1,6 @@
 {
   "name": "@genai-impact/ecologits-openai",
-  "version": "4.49.2",
+  "version": "4.49.3",
   "description": "Ecologits.js Wrapper & Calculator for the OpenAI API",
   "type": "module",
   "main": "es/index.js",
@@ -39,9 +39,7 @@
     "url": "git://github.com/genai-impact/ecologits.js.git"
   },
   "license": "MPL-2.0",
-  "dependencies": {
-    "ecologits-core": "*"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "peerDependencies": {
     "openai": "^4.49.0"
