@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "ecologits-core",
   "version": "0.0.1",
   "description": "Core library for the Ecologits project, port of the ecologits methodology to TypeScript",
   "type": "module",

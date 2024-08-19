@@ -34,7 +34,7 @@ But the principle is simple :
 ```ts
 import MistralClient from "@genai-impact/ecologits-mistral";
 import { ChatCompletionResponse } from "@mistralai/mistralai";
-import { Impacts } from "core";
+import { Impacts } from "ecologits-core";
 
 const apiKey = process.env.MISTRAL_API_KEY;
 

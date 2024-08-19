@@ -41,8 +41,7 @@
   },
   "license": "MPL-2.0",
   "dependencies": {
-    "@genai-impact/ecologits-mistral": "*",
-    "core": "*"
+    "@genai-impact/ecologits-mistral": "*"
   },
   "devDependencies": {},
   "peerDependencies": {},

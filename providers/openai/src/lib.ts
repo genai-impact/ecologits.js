@@ -1,4 +1,4 @@
-import { ecoLogitsData } from "core";
+import { ecoLogitsData } from "../../../libs/ecologits-core/es/index.js";
 import {
   ChatCompletion,
   ChatCompletionChunk,

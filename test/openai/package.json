@@ -41,7 +41,6 @@
   },
   "license": "MPL-2.0",
   "dependencies": {
-    "core": "*",
     "@genai-impact/ecologits-openai": "*"
   },
   "devDependencies": {

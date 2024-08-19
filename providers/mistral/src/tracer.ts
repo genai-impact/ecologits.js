@@ -1,7 +1,7 @@
 import { Mistral, SDKOptions } from "@mistralai/mistralai";
 import { EventStream } from "@mistralai/mistralai/lib/event-streams.js";
 import { CompletionEvent } from "@mistralai/mistralai/models/components/completionevent.js";
-import { ecoLogitsData } from "core";
+import { ecoLogitsData } from "ecologits-core";
 
 const PROVIDER = "mistralai";
 

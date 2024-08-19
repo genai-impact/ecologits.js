@@ -1,7 +1,7 @@
 import { ChatCompletionResponse } from "@mistralai/mistralai/models/components/chatcompletionresponse.js";
 import { CompletionEvent } from "@mistralai/mistralai/models/components/completionevent.js";
 
-import { ecoLogitsData } from "core";
+import { ecoLogitsData } from "ecologits-core";
 const PROVIDER = "mistralai";
 
 export const streamEventImpact = (
