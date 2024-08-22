@@ -60,17 +60,31 @@ const ecoLogitsData: EcoLogitsData = await fetch(url).then((res) => {
         text
           .split("\n")
           .slice(1, text.length)
-          .map((line) => {
+          .reduce((acc, line) => {
+            if (!line || typeof line !== "string" || !line.includes(",")) {
+              return acc;
+            }
             const infos = line.split(",");
-            return {
-              provider: infos[0],
-              name: infos[1],
-              totalParameters: infos[2].split(";").map((x) => parseFloat(x)),
-              activeParameters: infos[3].split(";").map((x) => parseFloat(x)),
-              warnings: infos[4],
-              sources: infos[5],
-            } as ModelData;
-          })
+            if (
+              !infos[2] ||
+              !infos[2].includes(";") ||
+              !infos[3] ||
+              !infos[3].includes(";")
+            ) {
+              return acc;
+            }
+            return [
+              ...acc,
+              {
+                provider: infos[0],
+                name: infos[1],
+                totalParameters: infos[2].split(";").map((x) => parseFloat(x)),
+                activeParameters: infos[3].split(";").map((x) => parseFloat(x)),
+                warnings: infos[4],
+                sources: infos[5],
+              } as ModelData,
+            ];
+          }, [] as ModelData[])
       )
   );
 });
