@@ -1,6 +1,6 @@
 {
   "name": "@genai-impact/ecologits-mistral",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Ecologits.js Calculator for the MistralAI API",
   "type": "module",
   "main": "es/index.js",
@@ -40,7 +40,7 @@
   },
   "license": "MPL-2.0",
   "dependencies": {
-    "@genai-impact/ecologits.js": "^2.0.1"
+    "@genai-impact/ecologits.js": "^2.0.2"
   },
   "devDependencies": {},
   "peerDependencies": {
