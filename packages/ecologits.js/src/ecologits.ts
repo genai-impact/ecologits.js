@@ -65,12 +65,7 @@ const ecoLogitsData: EcoLogitsData = await fetch(url).then((res) => {
               return acc;
             }
             const infos = line.split(",");
-            if (
-              !infos[2] ||
-              !infos[2].includes(";") ||
-              !infos[3] ||
-              !infos[3].includes(";")
-            ) {
+            if (!infos[2] || !infos[3]) {
               return acc;
             }
             return [
