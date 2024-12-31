@@ -19,7 +19,7 @@ yarn add @genai-impact/ecologits.js
 ```ts
 import { computeLlmImpacts, type Impacts } from "@genai-impact/ecologits.js";
 
-const PROVIDER = // provider name, must match one of the providers in https://raw.githubusercontent.com/genai-impact/ecologits/main/ecologits/data/models.csv
+const PROVIDER = // provider name, must match one of the providers in https://raw.githubusercontent.com/genai-impact/ecologits/refs/tags/0.5.0/ecologits/data/models.csv
 const model = // the model name used
 
 

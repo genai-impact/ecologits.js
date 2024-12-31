@@ -52,7 +52,7 @@ class EcoLogitsData {
   }
 }
 const url =
-  "https://raw.githubusercontent.com/genai-impact/ecologits/main/ecologits/data/models.csv";
+  "https://raw.githubusercontent.com/genai-impact/ecologits/refs/tags/0.5.0/ecologits/data/models.csv";
 const ecoLogitsData: EcoLogitsData = await fetch(url).then((res) => {
   return res.text().then(
     (text) =>
